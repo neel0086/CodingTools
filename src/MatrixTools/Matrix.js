@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, Modal, Form } from 'react-bootstrap';
 import './style.css'
  function Matrix() {
   const [inpArray,setInpArray]=useState(String)
