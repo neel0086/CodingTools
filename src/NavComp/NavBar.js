@@ -23,8 +23,8 @@ function NavBar() {
     
     <div class="nav-links">
       <Link to='/'>TreeVisualizer</Link>
-      <Link to='/matrix'>MatrixVisualizer</Link>
-      <Link to='testcase'>TestcaseGenrator</Link>
+      {/* <Link to='/matrix'>MatrixVisualizer</Link>
+      <Link to='testcase'>TestcaseGenrator</Link> */}
     </div>
 </div>
     </div>

@@ -3,10 +3,6 @@ import './style.css'
  function Matrix() {
   const [inpArray,setInpArray]=useState(String)
 
- 
-  
-
-      
   let nodes=[],levelOrder=[], adj={}, pos={}
   let n,root;
 

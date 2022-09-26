@@ -3,8 +3,8 @@ import './style.css'
  function Tree() {
   const [inpArray,setInpArray]=useState(String)
   const [levelView,setLevelView] = useState(true)
-
- 
+  const [InpRoot,setInpRoot]=useState(NaN)
+  
   
 
       
@@ -44,6 +44,22 @@ import './style.css'
     }
 
     // LOGIC FOR EDGE LIST FORMING ADJACENY LIST
+    function simplify(vertex,parent){
+      if (adj[vertex].length<1) return 
+      console.log(adj[vertex])
+      let index=-1
+      for(let k=0;k<adj[vertex].length;k++){
+        if(adj[vertex][k]!=parent)
+          simplify(adj[vertex][k],vertex)
+        else
+          index=k
+
+      }
+      if(index>-1)
+        adj[vertex].splice(index,1)
+      console.log(vertex)
+      return
+    }
     function startadj(x){
         let y=x.split('],[')
         y.forEach(element => {
@@ -56,19 +72,32 @@ import './style.css'
         if(n>15){nodeSpace=0.95;}
         if(n>31){nodeSpace=0.85;}
         if(n>63){nodeSpace=0.5;dx=350}
-        root=1
-        nodes.push(root)
+        
         console.log(levelOrder,y)
+        let nodesSet=new Set()
         levelOrder.forEach((ver,i) => {
           
-          nodes.push(ver[1])
+          nodesSet.add(ver[1])
+          nodesSet.add(ver[0])
 
             if(ver[0] in adj)
               adj[ver[0]].push(ver[1])
             else
               adj[ver[0]]=[ver[1]]
+            if(ver[1] in adj)
+              adj[ver[1]].push(ver[0])
+            else
+              adj[ver[1]]=[ver[0]]
+            
+            
 
         });
+        root=InpRoot!=InpRoot?nodes[0] : InpRoot
+        nodesSet.add(root)
+        nodes = Array.from(nodesSet);
+        console.log(root)
+        console.log(adj)
+        simplify(root,-1)
         console.log(adj,nodes,levelOrder)
         pos[root]=[width/(n>63?1:2),75]
         place(root,1);
@@ -81,14 +110,15 @@ import './style.css'
     // DRAWING FOR ADJANCEY LIST BY EDGE LIST
     function drawadj(){
       nodes.forEach(i=>{
-        let wd= ctx.measureText(i).width;
+        
+        let wd= ctx.measureText(typeof i== 'undefined'?'L':i).width;
         ctx.beginPath();
         ctx.arc(pos[i][0], pos[i][1], r, 0, 2 * Math.PI);
         ctx.fillStyle = "#a6a6a6";
         ctx.fill();
         ctx.fillStyle = "black";
         ctx.font = '16px arial';
-        ctx.fillText(i, pos[i][0]-wd/2, pos[i][1]+6);
+        ctx.fillText(typeof i== 'undefined'?'L':i, pos[i][0]-wd/2, pos[i][1]+6);
         ctx.stroke();
     })
 
@@ -197,9 +227,11 @@ import './style.css'
       else
         startadj(inpArray)
     }
-    catch(e){}
+    catch(e){
+      console.log(e)
+    }
     
-  }, [inpArray,levelView]);
+  }, [inpArray,levelView,InpRoot]);
   
 
     function realtime(e){
@@ -234,8 +266,15 @@ import './style.css'
         </button>
         <input 
           type="text" 
+          className="userInp"
           onChange={e=>realtime(e)}
           placeholder={"example: "+`${levelView?"[3,9,20,null,null,15,7]":"[[1,2],[2,3]]"}`}
+          />
+          <input 
+          type="text" 
+          className="rootInp"
+          onChange={e=>setInpRoot(e.target.value)}
+          placeholder="Root for edgeList"
           />
       
       </div>
