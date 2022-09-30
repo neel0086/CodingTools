@@ -268,7 +268,7 @@ import './style.css'
           type="text" 
           className="userInp"
           onChange={e=>realtime(e)}
-          placeholder={"example: "+`${levelView?"[3,9,20,null,null,15,7]":"[[1,2],[2,3]]"}`}
+          placeholder={"example: "+`${levelView?"[3,9,20,null,null,15,7] ;Serialised":"[[1,2],[2,3]]"}`}
           />
           <input 
           type="text" 
