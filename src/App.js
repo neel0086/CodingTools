@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './NavComp/NavBar';
 import Matrix from './MatrixTools/Matrix';
 import Testcase from './TestcaseGen/Testcase';
+import Graph from './Graph/Graph';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
             </Routes>
             <Routes>
                 <Route path="/testcase" element={<Testcase />} ></Route>
+            </Routes>
+            <Routes>
+                <Route path="/graph" element={<Graph/>} ></Route>
             </Routes>
           
       </Router>
